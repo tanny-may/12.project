@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { fetchOFZ } from './ofzActions';
 
 type OFZ = {
 	name: string;
@@ -22,21 +23,21 @@ const initialState: OFZState = {
 const ofzSlice = createSlice({
 	name: 'ofz',
 	initialState,
-	reducers: {
-		fetchOFZStart: (state) => {
-			state.loading = true;
-			state.error = null;
-		},
-		fetchOFZSuccess: (state, action: PayloadAction<OFZ[]>) => {
-			state.loading = false;
-			state.data = action.payload;
-		},
-		fetchOFZFailure: (state, action: PayloadAction<string>) => {
-			state.loading = false;
-			state.error = action.payload;
-		},
-	},
+	reducers: {},
+	extraReducers: (builder) =>
+		builder
+			.addCase(fetchOFZ.pending, (state) => {
+				state.loading = true;
+				state.error = null;
+			})
+			.addCase(fetchOFZ.fulfilled, (state, action: PayloadAction<OFZ[]>) => {
+				state.loading = false;
+				state.data = action.payload;
+			})
+			.addCase(fetchOFZ.rejected, (state, action) => {
+				state.loading = false;
+				state.error = String(action.payload);
+			}),
 });
 
-export const { fetchOFZStart, fetchOFZSuccess, fetchOFZFailure } = ofzSlice.actions;
 export default ofzSlice.reducer;

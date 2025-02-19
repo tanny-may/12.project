@@ -38,7 +38,7 @@ export function Table() {
 							<td>{ofz.name}</td>
 							<td>{ofz.repayment}</td>
 							<td>{ofz.yearsUntilRepayment}</td>
-							<td>{ofz.profitability}</td>
+							<td>{ofz.profitability} %</td>
 						</tr>
 					))}
 				</tbody>
